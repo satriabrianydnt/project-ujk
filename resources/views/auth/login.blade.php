@@ -1,6 +1,6 @@
 @extends('auth.layouts.app')
 
-@section('title', 'Login - Sistem Inventaris')
+@section('title', 'Login')
 
 @section('content')
     <div class="flex min-h-screen">
@@ -9,20 +9,13 @@
                 alt="Ilustrasi Pemrograman" class="absolute inset-0 w-full h-full object-cover opacity-15 mix-blend-overlay">
 
             <div class="relative z-10 max-w-md space-y-6">
-                <div
-                    class="inline-flex items-center justify-center p-3 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20 mb-4">
-                    <svg class="w-8 h-8 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
-                        </path>
-                    </svg>
-                </div>
-
-                <h1 class="text-4xl font-bold tracking-tight">StockMaster Pro</h1>
+                <h1 class="text-4xl font-extrabold tracking-tight text-white">Stock<span
+                        class="font-medium text-indigo-200">System<span
+                            class="text-base align-baseline font-bold text-white">.</span>
+                    </span>
+                </h1>
                 <p class="text-lg text-indigo-100 font-light">
-                    Sistem manajemen inventaris terintegrasi untuk efisiensi operasional gudang dan pemantauan stok secara
-                    real-time.
+                    Sistem manajemen inventaris terintegrasi untuk efisiensi operasional gudang.
                 </p>
 
                 <div class="pt-8">
@@ -45,20 +38,14 @@
             <div class="w-full max-w-md space-y-8">
                 <div>
                     <div class="lg:hidden text-center mb-8">
-                        <div class="inline-flex items-center justify-center p-3 bg-indigo-100 rounded-xl mb-4">
-                            <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
-                                </path>
-                            </svg>
-                        </div>
-                        <h1 class="text-3xl font-extrabold tracking-tight text-indigo-950">StockMaster Pro</h1>
+                        <h1 class="text-3xl font-extrabold tracking-tight text-indigo-950">Stock<span class="font-medium text-indigo-500">System<span class="text-sm align-top font-bold text-indigo-950">.</span>
+                            </span>
+                        </h1>
                     </div>
 
                     <h2 class="text-2xl font-extrabold text-gray-900 text-center lg:text-left">Selamat Datang</h2>
                     <p class="mt-2 text-sm text-gray-600 text-center lg:text-left">
-                        Masuk ke akun Anda untuk mengelola inventaris dengan mudah.
+                        Silahkan masuk terlebih dahulu untuk mengakses dashboard.</p>
                 </div>
 
                 <form class="mt-8 space-y-6" action="{{ route('login.post') }}" method="POST">
