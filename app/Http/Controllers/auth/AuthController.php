@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\auth\LoginRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,17 +17,13 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function authenticate(Request $request)
+    public function authenticate(LoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email|string',
-            'password' => 'required|string',
-        ]);
-
+        
         $user = User::where('email', $request->email)->first();
 
         if (!$user) {
-            Alert::toast('Akun tidak ditemukan. Silakan cek kembali Email Anda.', 'error');
+            Alert::toast('Akun tidak ditemukan.', 'error');
             return back()->onlyInput('email');
         }
 
