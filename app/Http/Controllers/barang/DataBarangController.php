@@ -3,19 +3,35 @@
 namespace App\Http\Controllers\barang;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\barang\DataBarangRequest;
+use App\Http\Requests\barang\UpdateBarangRequest;
 use App\Models\Barang;
 use App\Models\Kategori;
-use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+use Symfony\Component\HttpFoundation\Request;
 
 class DataBarangController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $barangs = Barang::with('kategori')->latest()->get();
         $kategoris = Kategori::all();
+
+        $query = Barang::with('kategori')->latest();
+
+        $query->when($request->search, function ($q) use ($request) {
+            $q->where('nama_barang', 'like', '%' . $request->search . '%')
+              ->orWhere('kode_barang', 'like', '%' . $request->search . '%');
+        });
+
+        $query->when($request->kategori, function ($q) use ($request) {
+            $q->where('kategori_id', $request->kategori);
+        });
+
+        $barangs = $query->paginate(5);
+
         return view('dashboard.data-barang', compact('barangs', 'kategoris'));
     }
 
@@ -30,9 +46,15 @@ class DataBarangController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(DataBarangRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        $validatedData['stok'] = $validatedData['stok'] ?? 0;
+        Barang::create($validatedData);
+
+        Alert::toast('Data barang berhasil ditambahkan!', 'success')->position('top-end');
+        return back();
     }
 
     /**
@@ -54,9 +76,16 @@ class DataBarangController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateBarangRequest $request, string $id)
     {
-        //
+        $barang = Barang::findOrFail($id);
+
+        $validatedData = $request->validated();
+        
+        $barang->update($validatedData);
+        
+        Alert::toast('Data barang berhasil diperbarui!', 'success')->position('top-end');
+        return back();
     }
 
     /**
@@ -64,6 +93,10 @@ class DataBarangController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $barang = Barang::findOrFail($id);
+        $barang->delete();
+
+        Alert::toast('Data barang berhasil dihapus!', 'success')->position('top-end');
+        return back();
     }
 }

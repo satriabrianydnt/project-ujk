@@ -25,29 +25,51 @@
 
         <div class="bg-white border border-gray-200/70 rounded-2xl shadow-sm overflow-hidden flex flex-col">
 
-            <div
-                class="p-4 sm:p-5 border-b border-gray-200/70 bg-gray-50/50 flex flex-col sm:flex-row justify-between items-center gap-3">
-                <div class="relative w-full sm:max-w-md">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                        </svg>
-                    </div>
-                    <input type="text"
-                        class="block w-full pl-11 pr-4 py-2.5 border border-gray-300 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 sm:text-sm transition-all"
-                        placeholder="Cari nama atau kode barang...">
-                </div>
+            <div class="p-4 sm:p-5 border-b border-gray-200/70 bg-gray-50/50">
+                <form action="{{ route('data-barang.index') }}" method="GET" class="flex flex-col sm:flex-row gap-3">
 
-                <button
-                    class="w-full sm:w-auto px-4 py-2.5 bg-white border border-gray-300 text-gray-700 font-medium text-sm rounded-xl hover:bg-gray-50 flex items-center justify-center shadow-sm transition-all">
-                    <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z">
-                        </path>
-                    </svg>
-                    Filter Data
-                </button>
+                    <div class="relative w-full flex-1">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                        <input type="text" name="search" value="{{ request('search') }}"
+                            class="block w-full pl-11 pr-4 py-2.5 border border-gray-300 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 sm:text-sm transition-all"
+                            placeholder="Cari nama atau kode barang...">
+                    </div>
+
+                    <div class="w-full sm:w-48">
+                        <select name="kategori"
+                            class="block w-full py-2.5 px-4 border border-gray-300 bg-white rounded-xl text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 cursor-pointer transition-all">
+                            <option value="">Semua Kategori</option>
+                            @foreach ($kategoris as $kat)
+                                <option value="{{ $kat->id }}" {{ request('kategori') == $kat->id ? 'selected' : '' }}>
+                                    {{ $kat->nama_kategori }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="flex items-center gap-2 w-full sm:w-auto">
+                        <button type="submit"
+                            class="w-full sm:w-auto px-5 py-2.5 bg-indigo-600 text-white font-semibold text-sm rounded-xl hover:bg-indigo-700 shadow-sm transition-all flex justify-center items-center">
+                            Cari Data
+                        </button>
+
+                        @if (request('search') || request('kategori'))
+                            <a href="{{ route('data-barang.index') }}"
+                                class="px-3 py-2.5 bg-white border border-gray-300 text-gray-500 rounded-xl hover:bg-gray-50 hover:text-red-500 transition-all shadow-sm"
+                                title="Reset Filter">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </a>
+                        @endif
+                    </div>
+                </form>
             </div>
 
             @if (isset($barangs) && count($barangs) > 0)
@@ -76,7 +98,8 @@
                         <tbody class="divide-y divide-gray-100">
                             @foreach ($barangs as $index => $barang)
                                 <tr class="hover:bg-indigo-50/30 transition-colors group">
-                                    <td class="px-6 py-4 text-sm text-gray-500 font-medium text-center">{{ $index + 1 }}
+                                    <td class="px-6 py-4 text-sm text-gray-500 font-medium text-center">
+                                        {{ $barangs->firstItem() + $index }}
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex flex-col items-start gap-1">
@@ -112,25 +135,25 @@
                                         @else
                                             <div
                                                 class="inline-flex items-center px-2.5 py-1 bg-red-50 text-red-700 rounded-lg border border-red-100 font-bold text-sm">
-                                                <div class="w-1.5 h-1.5 rounded-full bg-red-500 mr-2"></div>
-                                                Habis
+                                                <div class="w-1.5 h-1.5 rounded-full bg-red-500 mr-2"></div> Habis
                                             </div>
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 text-right">
                                         <div
-                                            class="flex items-center justify-end gap-1 md:opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                                            <a href="#"
+                                            class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                            <button type="button"
+                                                onclick="toggleModal('editBarangModal-{{ $barang->id }}')"
                                                 class="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all"
-                                                title="Edit">
+                                                title="Edit Data">
                                                 <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor"
                                                     viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                         d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
                                                     </path>
                                                 </svg>
-                                            </a>
-                                            <form action="#" method="POST"
+                                            </button>
+                                            <form action="{{ route('data-barang.destroy', $barang->id) }}" method="POST"
                                                 onsubmit="return confirm('Hapus barang ini secara permanen?');">
                                                 @csrf @method('DELETE')
                                                 <button type="submit"
@@ -163,7 +186,7 @@
                                 </span>
 
                                 <div class="flex gap-1">
-                                    <a href="#"
+                                    <button type="button" onclick="toggleModal('editBarangModal-{{ $barang->id }}')"
                                         class="p-1.5 text-gray-400 hover:text-indigo-600 bg-white border border-gray-200 rounded-md shadow-sm">
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
                                             viewBox="0 0 24 24">
@@ -171,8 +194,8 @@
                                                 d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
                                             </path>
                                         </svg>
-                                    </a>
-                                    <form action="#" method="POST"
+                                    </button>
+                                    <form action="{{ route('data-barang.destroy', $barang->id) }}" method="POST"
                                         onsubmit="return confirm('Hapus barang ini secara permanen?');">
                                         @csrf @method('DELETE')
                                         <button type="submit"
@@ -223,6 +246,31 @@
                         </div>
                     @endforeach
                 </div>
+
+                <div class="p-4 sm:p-5 border-t border-gray-200/70 bg-gray-50/30">
+                    <div class="flex flex-col md:flex-row justify-between items-center w-full gap-4">
+
+                        <div class="text-sm text-gray-500 font-medium text-center md:text-left">
+                            @if (request()->filled('search') || request()->filled('kategori'))
+                                Hasil pencarian: <span class="font-bold text-indigo-600">{{ $barangs->total() }}</span>
+                                Data ditemukan
+                                <span class="text-gray-400 mx-1">|</span>
+                                Halaman <span class="font-bold text-gray-900">{{ $barangs->currentPage() }}</span>
+                            @else
+                                Menampilkan <span class="font-bold text-gray-900">{{ $barangs->firstItem() ?? 0 }}</span>
+                                hingga <span class="font-bold text-gray-900">{{ $barangs->lastItem() ?? 0 }}</span>
+                                dari <span class="font-bold text-indigo-600">{{ $barangs->total() }}</span> Data
+                            @endif
+                        </div>
+
+                        @if ($barangs->hasPages())
+                            <div class="flex items-center gap-1.5">
+                                {{ $barangs->appends(request()->query())->links('components.pagination') }}
+                            </div>
+                        @endif
+
+                    </div>
+                </div>
             @else
                 <div class="flex flex-col items-center justify-center px-6 py-16 sm:py-24 text-center bg-white">
                     <div
@@ -246,4 +294,9 @@
     </div>
 
     <x-add-barang-modal :kategoris="$kategoris" />
+    @if (isset($barangs) && count($barangs) > 0)
+        @foreach ($barangs as $barang)
+            <x-edit-barang-modal :barang="$barang" :kategoris="$kategoris" />
+        @endforeach
+    @endif
 @endsection

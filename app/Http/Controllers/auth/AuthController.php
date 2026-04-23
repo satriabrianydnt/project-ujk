@@ -37,8 +37,6 @@ class AuthController extends Controller
         Auth::login($user, $remember);
         $request->session()->regenerate();
 
-        Alert::toast('Berhasil masuk ke sistem!', 'success')->position('top-end');
-
         return redirect()->intended('/dashboard');
     }
 

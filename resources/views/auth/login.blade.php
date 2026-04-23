@@ -17,20 +17,6 @@
                 <p class="text-lg text-indigo-100 font-light">
                     Sistem manajemen inventaris terintegrasi untuk efisiensi operasional gudang.
                 </p>
-
-                <div class="pt-8">
-                    <div class="p-5 bg-white/5 rounded-2xl backdrop-blur-md border border-white/10 shadow-xl text-center">
-                        <p class="text-xs font-semibold text-indigo-300 uppercase tracking-widest mb-2">Waktu Saat Ini</p>
-
-                        <p class="text-2xl font-bold text-white">
-                            {{ now()->format('d F Y') }}
-                        </p>
-                        <p class="text-xl font-medium text-indigo-100" id="live-time">
-                            {{ now()->format('H:i:s') }} <span class="text-sm text-indigo-200">WIB</span>
-                        </p>
-
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -94,16 +80,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function updateClock() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            const timeString = `${hours}:${minutes}:${seconds} <span class="text-sm text-indigo-200">WIB</span>`;
-            document.getElementById('live-time').innerHTML = timeString;
-        }
-        setInterval(updateClock, 1000);
-    </script>
 @endsection
