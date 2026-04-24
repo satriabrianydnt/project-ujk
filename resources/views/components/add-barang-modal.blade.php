@@ -11,7 +11,7 @@
                     <h3 class="text-lg font-bold text-gray-900">Tambah Barang Baru</h3>
                     <p class="text-xs text-gray-500 mt-1">Lengkapi data master barang inventaris.</p>
                 </div>
-                <button type="button" onclick="toggleModal('addBarangModal')"
+                <button type="button" onclick="window.location.reload()"
                     class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
@@ -70,14 +70,14 @@
                     <div>
                         <label class="block mb-1.5 text-sm font-semibold text-gray-900">Stok Awal</label>
                         <input type="number" name="stok" min="0" value="{{ old('stok', 0) }}"
-                            class="bg-gray-50 border border-gray-300 text-sm rounded-xl block w-full p-2.5 outline-none">
+                            class="bg-gray-50 border @error('stok') border-red-500 @else border-gray-300 @enderror text-sm rounded-xl block w-full p-2.5 outline-none">
                         @error('stok')
                             <p class="mt-1 text-xs text-red-500 font-medium">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
                 <div class="flex items-center justify-end p-5 border-t border-gray-100 bg-gray-50/50 gap-3">
-                    <button type="button" onclick="toggleModal('addBarangModal')"
+                    <button type="button" onclick="window.location.reload()"
                         class="px-5 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50">Batal</button>
                     <button type="submit"
                         class="px-5 py-2.5 text-sm font-medium text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 shadow-md">Simpan
@@ -88,7 +88,7 @@
     </div>
 </div>
 
-@if ($errors->any())
+@if ($errors->any() && !old('_method'))
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             toggleModal('addBarangModal');

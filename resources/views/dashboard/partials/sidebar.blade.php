@@ -56,8 +56,8 @@
                     </svg>
                 </a>
 
-                <a href="#"
-                    class="flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all hover:bg-white/5 hover:text-white text-indigo-200">
+                <a href="{{ route('kategori-barang.index') }}"
+                    class="flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all {{ request()->routeIs('kategori-barang.*') ? 'bg-white/10 text-white' : 'text-indigo-200 hover:bg-white/5 hover:text-white' }}">
                     <div class="flex items-center">
                         <svg class="w-[22px] h-[22px] mr-4 opacity-80" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">

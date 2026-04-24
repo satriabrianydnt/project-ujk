@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Kategori;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Faker\Factory;
 use Illuminate\Database\Seeder;
 
 class KategoriSeeder extends Seeder
@@ -35,5 +35,13 @@ class KategoriSeeder extends Seeder
         foreach ($categories as $category) {
             Kategori::create($category);
         }
+
+        // $faker = Factory::create('id_ID');
+        // for ($i = 1; $i <= 20; $i++) {
+        //     Kategori::create([
+        //         'nama_kategori' => 'Kategori Dummy ' . $i,
+        //         'deskripsi'     => $faker->sentence(10)
+        //     ]);
+        // }
     }
 }
