@@ -12,14 +12,19 @@ class Barang extends Model
 
     protected $table = 'barangs';
     protected $fillable = [
-        'kode_barang', 
-        'nama_barang', 
-        'kategori_id', 
+        'kode_barang',
+        'nama_barang',
+        'kategori_id',
         'stok'
     ];
-    
+
     public function kategori()
     {
         return $this->belongsTo(Kategori::class);
+    }
+
+    public function transaksi()
+    {
+        return $this->hasMany(Transaksi::class);
     }
 }

@@ -7,8 +7,8 @@ use App\Http\Requests\barang\DataBarangRequest;
 use App\Http\Requests\barang\UpdateBarangRequest;
 use App\Models\Barang;
 use App\Models\Kategori;
+use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
-use Symfony\Component\HttpFoundation\Request;
 
 class DataBarangController extends Controller
 {
@@ -21,16 +21,21 @@ class DataBarangController extends Controller
 
         $query = Barang::with('kategori')->latest();
 
-        $query->when($request->search, function ($q) use ($request) {
-            $q->where('nama_barang', 'like', '%' . $request->search . '%')
-              ->orWhere('kode_barang', 'like', '%' . $request->search . '%');
+        $search = $request->input('search');
+        $kategori = $request->input('kategori');
+
+        $query->when($search, function ($q) use ($search) {
+            $q->where(function ($query) use ($search) {
+                $query->where('nama_barang', 'like', "%$search%")
+                    ->orWhere('kode_barang', 'like', "%$search%");
+            });
         });
 
-        $query->when($request->kategori, function ($q) use ($request) {
-            $q->where('kategori_id', $request->kategori);
+        $query->when($kategori, function ($q) use ($kategori) {
+            $q->where('kategori_id', $kategori);
         });
 
-        $barangs = $query->paginate(5);
+        $barangs = $query->paginate(5)->withQueryString();
 
         return view('dashboard.data-barang', compact('barangs', 'kategoris'));
     }
@@ -81,9 +86,9 @@ class DataBarangController extends Controller
         $barang = Barang::findOrFail($id);
 
         $validatedData = $request->validated();
-        
+
         $barang->update($validatedData);
-        
+
         Alert::toast('Data barang berhasil diperbarui!', 'success')->position('top-end');
         return back();
     }

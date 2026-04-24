@@ -7,7 +7,7 @@
     <div class="flex flex-col items-center pt-8 pb-6 px-8 relative">
 
         <span class="text-3xl font-extrabold tracking-tight text-white drop-shadow-sm text-center">
-            Stock<span class="font-normal text-indigo-300">System<span
+            Inv<span class="font-normal text-indigo-300">Sys<span
                     class="text-xs align-baseline font-bold text-white">.</span></span>
         </span>
 
@@ -77,8 +77,8 @@
         <div>
             <p class="px-5 mb-2 text-[11px] font-semibold tracking-widest text-indigo-300/60 uppercase">Transaksi</p>
             <div class="space-y-1">
-                <a href="#"
-                    class="flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all hover:bg-white/5 hover:text-white text-indigo-200">
+                <a href="{{ route('transaksi.index') }}"
+                    class="flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all {{ request()->routeIs('transaksi.*') ? 'bg-white/10 text-white' : 'hover:bg-white/5 hover:text-white text-indigo-200' }}">
                     <div class="flex items-center">
                         <svg class="w-[22px] h-[22px] mr-4 opacity-80" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">

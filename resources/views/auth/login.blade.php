@@ -9,8 +9,8 @@
                 alt="Ilustrasi Pemrograman" class="absolute inset-0 w-full h-full object-cover opacity-15 mix-blend-overlay">
 
             <div class="relative z-10 max-w-md space-y-6">
-                <h1 class="text-4xl font-extrabold tracking-tight text-white">Stock<span
-                        class="font-medium text-indigo-200">System<span
+                <h1 class="text-4xl font-extrabold tracking-tight text-white">Inv<span
+                        class="font-medium text-indigo-200">Sys<span
                             class="text-base align-baseline font-bold text-white">.</span>
                     </span>
                 </h1>
@@ -24,7 +24,7 @@
             <div class="w-full max-w-md space-y-8">
                 <div>
                     <div class="lg:hidden text-center mb-8">
-                        <h1 class="text-3xl font-extrabold tracking-tight text-indigo-950">Stock<span class="font-medium text-indigo-500">System<span class="text-sm align-top font-bold text-indigo-950">.</span>
+                        <h1 class="text-3xl font-extrabold tracking-tight text-indigo-950">Inv<span class="font-medium text-indigo-500">Sys<span class="text-sm align-baseline font-bold text-indigo-950">.</span>
                             </span>
                         </h1>
                     </div>
@@ -73,10 +73,6 @@
                         Masuk ke Dashboard
                     </button>
                 </form>
-
-                <p class="text-center text-xs text-gray-400 pt-8 font-mono">
-                    &copy; 2026 All rights reserved.
-                </p>
             </div>
         </div>
     </div>

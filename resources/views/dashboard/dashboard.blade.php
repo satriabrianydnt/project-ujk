@@ -10,7 +10,7 @@
             <div class="relative z-10">
                 <h3 class="text-2xl font-bold text-white">Selamat datang kembali, {{ auth()->user()->name }}! 👋</h3>
                 <p class="mt-2 text-indigo-100 max-w-xl">
-                    Pantau ketersediaan inventaris dan kelola data master StockSystem dalam satu panel kendali terpusat.
+                    Pantau ketersediaan inventaris dan kelola data master InvSys.
                 </p>
             </div>
             <div class="absolute top-0 right-0 -mt-4 -mr-4 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
@@ -108,14 +108,16 @@
                 <a href="{{ route('data-barang.index') }}"
                     class="text-sm font-semibold text-indigo-600 hover:text-indigo-700">Lihat Semua →</a>
             </div>
-            <div class="overflow-x-auto">
+
+            <div class="hidden md:block overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead class="bg-gray-50/50 text-[11px] font-bold text-gray-400 uppercase tracking-widest">
                         <tr>
                             <th class="px-6 py-4">Nama Barang</th>
                             <th class="px-6 py-4">Kode Barang</th>
                             <th class="px-6 py-4 text-center">Kategori</th>
-                            <th class="px-6 py-4">Stok</th>
+                            <th class="px-6 py-4 text-center">Ditambahkan</th>
+                            <th class="px-6 py-4 text-right">Stok</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
@@ -145,8 +147,15 @@
                                     </span>
                                 </td>
 
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center">
+                                <td class="px-6 py-4 text-center">
+                                    <div class="flex flex-col items-center">
+                                        <span
+                                            class="text-xs font-semibold text-gray-600">{{ \Carbon\Carbon::parse($item->created_at)->format('d M Y') }}</span>
+                                    </div>
+                                </td>
+
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end">
                                         <div
                                             class="w-1.5 h-1.5 rounded-full {{ $item->stok <= 5 ? 'bg-red-500 animate-pulse' : 'bg-emerald-500' }} mr-2">
                                         </div>
@@ -168,6 +177,61 @@
                     </tbody>
                 </table>
             </div>
+
+            <div class="block md:hidden divide-y divide-gray-100">
+                @forelse($recentBarangs as $item)
+                    <div class="p-4 hover:bg-gray-50/50 transition-colors">
+                        <div class="flex justify-between items-start mb-2 gap-3">
+                            <span class="font-bold text-gray-900 text-sm leading-tight">{{ $item->nama_barang }}</span>
+                            <div class="flex items-center shrink-0">
+                                <div
+                                    class="w-1.5 h-1.5 rounded-full {{ $item->stok <= 5 ? 'bg-red-500 animate-pulse' : 'bg-emerald-500' }} mr-1.5">
+                                </div>
+                                <span class="text-sm font-bold {{ $item->stok <= 5 ? 'text-red-600' : 'text-gray-900' }}">
+                                    {{ $item->stok }} <span
+                                        class="text-[10px] font-normal text-gray-400 ml-0.5 uppercase">Unit</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span
+                                class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-indigo-50 text-indigo-600 border border-indigo-100 uppercase">
+                                {{ $item->kode_barang }}
+                            </span>
+                            <span
+                                class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200/60 uppercase tracking-tight">
+                                <svg class="w-3 h-3 mr-1 text-slate-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z">
+                                    </path>
+                                </svg>
+                                {{ $item->kategori->nama_kategori ?? 'N/A' }}
+                            </span>
+
+                            <span class="ml-auto text-[10px] text-gray-400 flex items-center gap-1">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                                {{ \Carbon\Carbon::parse($item->created_at)->format('d M Y') }}
+                            </span>
+                        </div>
+                    </div>
+                @empty
+                    <div class="p-8 text-center text-gray-400 text-sm italic flex flex-col items-center">
+                        <svg class="w-10 h-10 text-gray-200 mb-2" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                        </svg>
+                        Belum ada data barang terbaru.
+                    </div>
+                @endforelse
+            </div>
+
         </div>
     </div>
 @endsection

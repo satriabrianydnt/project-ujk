@@ -83,10 +83,13 @@
                                     No</th>
                                 <th scope="col"
                                     class="px-6 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">
-                                    Informasi Barang</th>
+                                    Nama Barang</th>
                                 <th scope="col"
                                     class="px-6 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Kategori
                                 </th>
+                                <th scope="col"
+                                    class="px-6 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest text-center">
+                                    Ditambahkan Pada</th>
                                 <th scope="col"
                                     class="px-6 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest text-right">
                                     Ketersediaan</th>
@@ -122,6 +125,12 @@
                                             </svg>
                                             {{ $barang->kategori->nama_kategori ?? 'Tanpa Kategori' }}
                                         </span>
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="flex flex-col items-center justify-center">
+                                            <span
+                                                class="text-xs font-bold text-gray-700">{{ \Carbon\Carbon::parse($barang->created_at)->format('d M Y') }}</span>
+                                        </div>
                                     </td>
                                     <td class="px-6 py-4 text-right">
                                         @if ($barang->stok > 0)
@@ -211,8 +220,13 @@
                                 </div>
                             </div>
 
-                            <h4 class="text-sm font-bold text-gray-900 leading-snug">{{ $barang->nama_barang }}</h4>
-
+                            <div>
+                                <h4 class="text-sm font-bold text-gray-900 leading-snug">{{ $barang->nama_barang }}</h4>
+                                <div class="flex items-center gap-1 text-[10px] text-gray-400 mt-1">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <span>Ditambahkan: {{ \Carbon\Carbon::parse($barang->created_at)->format('d M Y') }}</span>
+                                </div>
+                            </div>
                             <div class="flex justify-between items-center pt-2.5 border-t border-gray-100">
                                 <div
                                     class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200/50">
