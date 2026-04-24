@@ -4,23 +4,41 @@
 <aside id="sidebar"
     class="fixed inset-y-0 left-0 z-30 w-72 transition-transform duration-300 transform -translate-x-full bg-indigo-950 text-indigo-100 md:relative md:translate-x-0 md:flex md:flex-col flex-shrink-0">
 
-    <div class="flex flex-col items-center pt-8 pb-6 px-8 relative">
+    @if (!empty($appName))
+        <div class="flex flex-col items-center pt-8 pb-4 px-8 relative">
+            <span class="text-3xl font-extrabold tracking-tight text-white drop-shadow-sm text-center">
+                @php
+                    $mid = ceil(strlen($appName) / 2);
+                    $firstPart = substr($appName, 0, $mid);
+                    $secondPart = substr($appName, $mid);
+                @endphp
 
-        <span class="text-3xl font-extrabold tracking-tight text-white drop-shadow-sm text-center">
-            Inv<span class="font-normal text-indigo-300">Sys<span
-                    class="text-xs align-baseline font-bold text-white">.</span></span>
-        </span>
+                {{ $firstPart }}<span class="font-normal text-indigo-300">{{ $secondPart }}<span
+                        class="text-xs align-baseline font-bold text-white"></span></span>
+            </span>
 
-        <button class="absolute top-9 right-5 text-indigo-300 md:hidden hover:text-white focus:outline-none"
-            onclick="toggleSidebar()">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-        </button>
-    </div>
+            {{-- Tombol Close Mobile tetap harus ada jika di layar kecil --}}
+            <button class="absolute top-9 right-5 text-indigo-300 md:hidden hover:text-white focus:outline-none"
+                onclick="toggleSidebar()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    @else
+        <div class="md:hidden flex justify-end p-4">
+            <button class="text-indigo-300 hover:text-white focus:outline-none" onclick="toggleSidebar()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
+        </div>
+        <div class="pt-4"></div>
+    @endif
 
     <nav class="flex-1 overflow-y-auto px-4 py-2 space-y-6 scrollbar-none">
-
         <div>
             <div class="space-y-1">
                 <a href="{{ route('dashboard') }}"

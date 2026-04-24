@@ -9,12 +9,19 @@
                 alt="Ilustrasi Pemrograman" class="absolute inset-0 w-full h-full object-cover opacity-15 mix-blend-overlay">
 
             <div class="relative z-10 max-w-md space-y-6">
-                <h1 class="text-4xl font-extrabold tracking-tight text-white">Inv<span
-                        class="font-medium text-indigo-200">Sys<span
-                            class="text-base align-baseline font-bold text-white">.</span>
-                    </span>
-                </h1>
-                <p class="text-lg text-indigo-100 font-light">
+                @if (!empty($appName))
+                    <h1 class="text-4xl font-extrabold tracking-tight text-white">
+                        @php
+                            $mid = ceil(strlen($appName) / 2);
+                            $firstPart = substr($appName, 0, $mid);
+                            $secondPart = substr($appName, $mid);
+                        @endphp
+                        {{ $firstPart }}<span class="font-medium text-indigo-200">{{ $secondPart }}<span
+                                class="text-base align-baseline font-bold text-white"></span></span>
+                    </h1>
+                @endif
+
+                <p class="text-lg text-indigo-100 font-light {{ empty($appName) ? 'text-2xl opacity-100' : '' }}">
                     Sistem manajemen inventaris terintegrasi untuk efisiensi operasional gudang.
                 </p>
             </div>
@@ -23,12 +30,19 @@
         <div class="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 bg-white">
             <div class="w-full max-w-md space-y-8">
                 <div>
-                    <div class="lg:hidden text-center mb-8">
-                        <h1 class="text-3xl font-extrabold tracking-tight text-indigo-950">Inv<span class="font-medium text-indigo-500">Sys<span class="text-sm align-baseline font-bold text-indigo-950">.</span>
-                            </span>
-                        </h1>
-                    </div>
-
+                    @if (!empty($appName))
+                        <div class="lg:hidden text-center mb-8">
+                            <h1 class="text-3xl font-extrabold tracking-tight text-indigo-950">
+                                @php
+                                    $mid = ceil(strlen($appName) / 2);
+                                    $firstPart = substr($appName, 0, $mid);
+                                    $secondPart = substr($appName, $mid);
+                                @endphp
+                                {{ $firstPart }}<span class="font-medium text-indigo-500">{{ $secondPart }}<span
+                                        class="text-sm align-baseline font-bold text-indigo-950"></span></span>
+                            </h1>
+                        </div>
+                    @endif
                     <h2 class="text-2xl font-extrabold text-gray-900 text-center lg:text-left">Selamat Datang</h2>
                     <p class="mt-2 text-sm text-gray-600 text-center lg:text-left">
                         Silahkan masuk terlebih dahulu untuk mengakses dashboard.</p>
