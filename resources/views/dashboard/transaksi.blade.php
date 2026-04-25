@@ -111,7 +111,8 @@
                                 <th
                                     class="px-6 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest text-center">
                                     Tanggal</th>
-                                <th class="px-6 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Nama Barang
+                                <th class="px-6 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Nama
+                                    Barang
                                 </th>
                                 <th
                                     class="px-6 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest text-center">
@@ -254,7 +255,11 @@
                 </div>
 
                 <div class="px-0 md:px-6 py-4 bg-transparent md:bg-gray-50/50 md:border-t border-gray-200/70 mt-4 md:mt-0">
-                    {{ $transaksis->links() }}
+                    @if ($transaksis->hasPages())
+                        <div class="flex items-center gap-1.5">
+                            {{ $transaksis->links('components.pagination') }}
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

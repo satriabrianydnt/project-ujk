@@ -18,10 +18,26 @@ class TransaksiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $barangs = Barang::all();
-        $transaksis = Transaksi::with('barang')->latest()->paginate(10);
+        $barangs = Barang::orderBy('nama_barang', 'asc')->get();
+
+        $query = Transaksi::with('barang');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->whereHas('barang', function ($q) use ($search) {
+                $q->where('nama_barang', 'like', '%' . $search . '%')
+                    ->orWhere('kode_barang', 'like', '%' . $search . '%');
+            });
+        }
+
+        if ($request->filled('jenis')) {
+            $query->where('jenis', $request->jenis);
+        }
+
+        $transaksis = $query->latest()->paginate(10)->withQueryString();
+
         return view('dashboard.transaksi', compact('barangs', 'transaksis'));
     }
 
@@ -69,12 +85,12 @@ class TransaksiController extends Controller
     }
 
     public function exportPdf()
-{
-    $transaksis = Transaksi::with('barang')->latest()->get();
-    $pdf = Pdf::loadView('export.export-pdf', compact('transaksis'));
-    
-    return $pdf->download('Laporan_Transaksi_' . date('d-m-Y') . '.pdf');
-}
+    {
+        $transaksis = Transaksi::with('barang')->latest()->get();
+        $pdf = Pdf::loadView('export.export-pdf', compact('transaksis'));
+
+        return $pdf->download('Laporan_Transaksi_' . date('d-m-Y') . '.pdf');
+    }
 
     /**
      * Display the specified resource.
