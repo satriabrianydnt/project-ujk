@@ -52,7 +52,7 @@ npm run dev
 Buka browser dan kunjungi:
 http://127.0.0.1:8000
 
-## 🚀 Panduan Penggunaan
+## Panduan Penggunaan
 
 ### Mengakses Dashboard
 1. Login dengan Akun yang ada di dalam Seeder (default: admin@inventaris.com | admin123)
