@@ -15,33 +15,40 @@ Ikuti langkah-langkah berikut untuk menjalankan proyek secara lokal:
 
 1. Clone repository
 git clone https://github.com/satriabrianydnt/project-ujk.git
+
 cd project-ujk
 
-2. Salin file environment
+3. Salin file environment
 cp .env.example .env
 
-3. Install dependency
+4. Install dependency
 composer install
+
 npm install
 
-4. Generate application key
+5. Generate application key
 php artisan key:generate
 
-5. Konfigurasi database
+6. Konfigurasi database
 Buka file .env
+
 Sesuaikan konfigurasi berikut:
+
 DB_DATABASE=nama_database
+
 DB_USERNAME=username
+
 DB_PASSWORD=password
 
-6. Jalankan migrasi dan seeder
+8. Jalankan migrasi dan seeder
 php artisan migrate --seed
 
-7. Jalankan server
+9. Jalankan server
 php artisan serve
+
 npm run dev
 
-8. Akses aplikasi
+10. Akses aplikasi
 Buka browser dan kunjungi:
 http://127.0.0.1:8000
 
