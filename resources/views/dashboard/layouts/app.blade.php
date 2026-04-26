@@ -52,10 +52,10 @@
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-4 md:p-6">
                 @yield('content')
             </main>
-            
+
         </div>
     </div>
-    
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
@@ -67,17 +67,25 @@
             overlay.classList.toggle('hidden');
         }
 
-        function toggleProfileDropdown() {
+        function toggleProfileDropdown(event) {
+            if (event) {
+                event.stopPropagation();
+            }
+
             const dropdown = document.getElementById('profileDropdown');
-            dropdown.classList.toggle('hidden');
+            if (dropdown) {
+                dropdown.classList.toggle('hidden');
+            }
         }
 
         window.addEventListener('click', function(e) {
             const dropdown = document.getElementById('profileDropdown');
-            const button = e.target.closest('button[onclick="toggleProfileDropdown()"]');
+            const button = document.getElementById('profileMenuButton');
 
-            if (!button && !dropdown.contains(e.target)) {
-                dropdown.classList.add('hidden');
+            if (dropdown && button) {
+                if (!dropdown.contains(e.target) && !button.contains(e.target)) {
+                    dropdown.classList.add('hidden');
+                }
             }
         });
 

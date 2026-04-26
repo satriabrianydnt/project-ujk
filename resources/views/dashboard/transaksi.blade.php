@@ -8,7 +8,7 @@
 
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div class="w-full sm:w-auto">
-                    <h2 class="text-xl md:text-2xl font-extrabold text-gray-900 tracking-tight">Riwayat Transaksi</h2>
+                    <h2 class="text-xl md:text-2xl font-extrabold text-gray-900 tracking-tight">Riwayat Barang Masuk & Keluar</h2>
                     <p class="text-xs md:text-sm text-gray-500 mt-1 leading-relaxed">
                         Pantau alur keluar masuk barang inventaris.
                     </p>
